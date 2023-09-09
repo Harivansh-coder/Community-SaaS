@@ -1,4 +1,6 @@
 import express from "express";
+import mongoose from "mongoose";
+import { envVariables } from "./env";
 
 // create a new express application instance
 const app: express.Application = express();
@@ -8,7 +10,15 @@ app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hello " + req.query.name);
 });
 
-// start the Express server
-app.listen(3000, () => {
-  console.log("server started at http://localhost:3000");
-});
+// connect to MongoDB and start the express server
+mongoose
+  .connect(envVariables.MONGO_URL || "", {})
+  .then(() => {
+    console.log("MongoDB connected");
+    app.listen(envVariables.PORT, () => {
+      console.log(`Server started at http://localhost:${envVariables.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
