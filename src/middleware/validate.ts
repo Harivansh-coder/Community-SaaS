@@ -13,7 +13,10 @@ const validateRequestBody =
       next();
     } catch (error: any) {
       res.status(400).json({
-        error,
+        status: false,
+        content: {
+          error: error.errors,
+        },
       });
     }
   };

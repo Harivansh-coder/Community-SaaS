@@ -23,13 +23,13 @@ app.get("/v1", (_req: express.Request, res: express.Response) => {
 app.use("/v1/auth", userRouter);
 
 // define a route handler for role routes
-app.use("/v1/roles", roleRouter);
+app.use("/v1/role", roleRouter);
 
 // define a route handler for community routes
-app.use("/v1/communities", communityRouter);
+app.use("/v1/community", communityRouter);
 
 // define a route handler for member routes
-app.use("/v1/members", memberRouter);
+app.use("/v1/member", memberRouter);
 
 // connect to MongoDB and start the express server
 mongoose

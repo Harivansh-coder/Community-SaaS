@@ -7,13 +7,19 @@ import {
   getMyJoinedCommunitiesController,
   getMyOwnedCommunitiesController,
 } from "@/controller/community";
+import validateRequestBody from "@/middleware/validate";
+import { communitySchema } from "@/schema/community";
 import express from "express";
 
 // express router instance
 const communityRouter = express.Router();
 
 // create community route
-communityRouter.post("/", createCommunityController);
+communityRouter.post(
+  "/",
+  validateRequestBody(communitySchema),
+  createCommunityController
+);
 
 // get all communities route
 communityRouter.get("/", getAllCommunitiesController);
