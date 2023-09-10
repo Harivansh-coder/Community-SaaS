@@ -30,9 +30,17 @@ communityRouter.get("/", getAllCommunitiesController);
 communityRouter.get("/:id/members", getAllMembersController);
 
 // get all my owned communities route
-communityRouter.get("/me/owner", getMyOwnedCommunitiesController);
+communityRouter.get(
+  "/me/owner",
+  verifyAccessToken,
+  getMyOwnedCommunitiesController
+);
 
 // get all my joined communities route
-communityRouter.get("/me/member", getMyJoinedCommunitiesController);
+communityRouter.get(
+  "/me/member",
+  verifyAccessToken,
+  getMyJoinedCommunitiesController
+);
 
 export default communityRouter;

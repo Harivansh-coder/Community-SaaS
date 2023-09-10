@@ -23,6 +23,11 @@ memberRouter.post(
 );
 
 // remove member route
-memberRouter.delete("/:id", verifyAccessToken, removeMemberController);
+memberRouter.delete(
+  "/:id",
+  verifyAccessToken,
+  userAccessCheck,
+  removeMemberController
+);
 
 export default memberRouter;
