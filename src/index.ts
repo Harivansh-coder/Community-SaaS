@@ -5,7 +5,7 @@ import { envVariables } from "@/env";
 import userRouter from "@/router/user";
 
 // create a new express application instance
-const app: express.Application = express();
+const app = express();
 
 // middleware for parsing application/json
 app.use(express.json());
@@ -18,6 +18,15 @@ app.get("/v1", (_req: express.Request, res: express.Response) => {
 
 // define a route handler for user routes
 app.use("/v1/auth", userRouter);
+
+// define a route handler for role routes
+app.use("/v1/roles", roleRouter);
+
+// define a route handler for community routes
+// app.use("/v1/communities", communityRouter);
+
+// // define a route handler for member routes
+// app.use("/v1/members", memberRouter);
 
 // connect to MongoDB and start the express server
 mongoose

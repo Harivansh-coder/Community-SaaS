@@ -6,12 +6,12 @@ import {
   userLoginController,
   getUserProfileController,
 } from "@/controller/user";
-import { userSignupSchema, userLoginSchema } from "@/schema/user";
+import { userSignupSchema, userBaseSchema } from "@/schema/user";
 import validateRequestBody from "@/middleware/validate";
 import verifyAccessToken from "@/middleware/auth";
 
 // express router instance
-const userRouter: express.Router = express.Router();
+const userRouter = express.Router();
 
 // user signup route
 userRouter.post(
@@ -22,7 +22,7 @@ userRouter.post(
 // user login route
 userRouter.post(
   "/signin",
-  validateRequestBody(userLoginSchema),
+  validateRequestBody(userBaseSchema),
   userLoginController
 );
 

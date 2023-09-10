@@ -1,5 +1,5 @@
 // controller for user routes
-import User, { IUser } from "@/model/user";
+import User from "@/model/user";
 import generateToken from "@/utility/token";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
@@ -66,7 +66,7 @@ export const userLoginController = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    const user: IUser | null = await User.findOne({ email });
+    const user = await User.findOne({ email }).lean();
 
     // check if user exists
     if (!user) {
@@ -119,8 +119,7 @@ export const getUserProfileController = async (req: Request, res: Response) => {
     const userID = req.user?.id;
 
     // get user from database
-    const user: IUser | null = await User.findById(userID);
-
+    const user = await User.findById(userID).lean();
     // check if user exists
     if (!user) {
       return res.status(404).send({
