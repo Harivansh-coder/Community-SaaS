@@ -9,7 +9,7 @@ exports.userBaseSchema = zod_1.z.object({
     password: zod_1.z
         .string()
         .trim()
-        .min(8, { message: "Password must be at least 8 characters" })
+        .min(6, { message: "Password must be at least 6 characters" })
         .max(50, { message: "Password exceeds the maximum limit of characters" }),
 });
 // zod schema for user signup

@@ -8,6 +8,7 @@ exports.getMyJoinedCommunitiesController = exports.getMyOwnedCommunitiesControll
 const community_1 = __importDefault(require("@/model/community"));
 const member_1 = __importDefault(require("@/model/member"));
 const role_1 = __importDefault(require("@/model/role"));
+const pagination_1 = require("@/utility/pagination");
 const mongoose_1 = __importDefault(require("mongoose"));
 // create community controller
 const createCommunityController = async (req, res) => {
@@ -59,16 +60,31 @@ const createCommunityController = async (req, res) => {
 };
 exports.createCommunityController = createCommunityController;
 // get all communities controller
-const getAllCommunitiesController = async (_req, res) => {
+const getAllCommunitiesController = async (req, res) => {
     try {
+        // parse pagination query
+        const parsedPaginationQuery = pagination_1.paginationQuery.parse(req.query);
+        // get page and limit from parsed query
+        const { page, limit } = parsedPaginationQuery;
+        // get total number of documents to skip
+        const skip = (page - 1) * limit;
         // get all communities from database and populate owner name
         const communities = await community_1.default.find({})
             .populate("owner", "name")
+            .skip(skip)
+            .limit(limit)
             .lean();
+        // get total number of communities
+        const totalCommunities = await community_1.default.countDocuments({});
         // send success response
         return res.status(200).send({
             status: true,
             content: {
+                meta: {
+                    total: totalCommunities,
+                    pages: Math.ceil(totalCommunities / limit),
+                    page,
+                },
                 data: communities,
             },
         });
@@ -86,6 +102,13 @@ exports.getAllCommunitiesController = getAllCommunitiesController;
 // get all members of a community controller
 const getAllMembersController = async (_req, res) => {
     try {
+        // parse pagination query
+        const parsedPaginationQuery = pagination_1.paginationQuery.parse(_req.query);
+        // get page and limit from parsed query
+        const { page, limit } = parsedPaginationQuery;
+        // get total number of documents to skip
+        const skip = (page - 1) * limit;
+        // get community slug from request params
         const communitySlug = _req.params.id;
         // get community id from database
         const communityId = await community_1.default.findOne({ slug: communitySlug }).lean();
@@ -104,11 +127,22 @@ const getAllMembersController = async (_req, res) => {
         })
             .populate("user", "name")
             .populate("role", "name")
+            .skip(skip)
+            .limit(limit)
             .lean();
+        // get total number of members of a community
+        const totalMembersOfCurrentCommunity = await member_1.default.countDocuments({
+            community: communityId,
+        });
         // send success response
         return res.status(200).send({
             status: true,
             content: {
+                meta: {
+                    total: totalMembersOfCurrentCommunity,
+                    pages: Math.ceil(totalMembersOfCurrentCommunity / limit),
+                    page,
+                },
                 data: allMembersOfCurrentCommunity,
             },
         });
@@ -127,6 +161,13 @@ exports.getAllMembersController = getAllMembersController;
 const getMyOwnedCommunitiesController = async (req, res) => {
     // get all my owned communities from database
     try {
+        // parse pagination query
+        const parsedPaginationQuery = pagination_1.paginationQuery.parse(req.query);
+        // get page and limit from parsed query
+        const { page, limit } = parsedPaginationQuery;
+        // get total number of documents to skip
+        const skip = (page - 1) * limit;
+        // get user id from request object
         const userId = req.user?.id;
         // check if user id is valid
         if (!mongoose_1.default.isValidObjectId(userId)) {
@@ -138,11 +179,23 @@ const getMyOwnedCommunitiesController = async (req, res) => {
             });
         }
         // get all my owned communities from database
-        const myOwnedCommunities = await community_1.default.find({ owner: userId }).lean();
+        const myOwnedCommunities = await community_1.default.find({ owner: userId })
+            .skip(skip)
+            .limit(limit)
+            .lean();
+        // get total number of my owned communities
+        const totalMyOwnedCommunities = await community_1.default.countDocuments({
+            owner: userId,
+        });
         // send success response
         return res.status(200).send({
             status: true,
             content: {
+                meta: {
+                    total: totalMyOwnedCommunities,
+                    pages: Math.ceil(totalMyOwnedCommunities / limit),
+                    page,
+                },
                 data: myOwnedCommunities,
             },
         });
@@ -161,6 +214,13 @@ exports.getMyOwnedCommunitiesController = getMyOwnedCommunitiesController;
 const getMyJoinedCommunitiesController = async (req, res) => {
     // get all my joined communities from database
     try {
+        // parse pagination query
+        const parsedPaginationQuery = pagination_1.paginationQuery.parse(req.query);
+        // get page and limit from parsed query
+        const { page, limit } = parsedPaginationQuery;
+        // get total number of documents to skip
+        const skip = (page - 1) * limit;
+        // get user id from request object
         const userId = req.user?.id;
         // check if user id is valid
         if (!mongoose_1.default.isValidObjectId(userId)) {
@@ -178,11 +238,22 @@ const getMyJoinedCommunitiesController = async (req, res) => {
             _id: { $in: myJoinedCommunitiesIds },
         })
             .populate("owner", "name")
+            .skip(skip)
+            .limit(limit)
             .lean();
+        // get total number of my joined communities
+        const totalMyJoinedCommunities = await community_1.default.countDocuments({
+            _id: { $in: myJoinedCommunitiesIds },
+        });
         // send success response
         return res.status(200).send({
             status: true,
             content: {
+                meta: {
+                    total: totalMyJoinedCommunities,
+                    pages: Math.ceil(totalMyJoinedCommunities / limit),
+                    page,
+                },
                 data: myJoinedCommunities,
             },
         });
