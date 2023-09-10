@@ -1,11 +1,15 @@
 // middleware to validate request body
 
 import { Request, Response, NextFunction } from "express";
+import { AnyZodObject } from "zod";
 
 const validateRequestBody =
-  (schema: any) => async (req: Request, res: Response, next: NextFunction) => {
+  (schema: AnyZodObject) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parse(req.body);
+      // validate request body
+      req.body = await schema.parse(req.body);
+
       next();
     } catch (error: any) {
       res.status(400).json({

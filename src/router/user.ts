@@ -8,6 +8,7 @@ import {
 } from "@/controller/user";
 import { userSignupSchema, userLoginSchema } from "@/schema/user";
 import validateRequestBody from "@/middleware/validate";
+import verifyAccessToken from "@/middleware/auth";
 
 // express router instance
 const userRouter: express.Router = express.Router();
@@ -26,6 +27,5 @@ userRouter.post(
 );
 
 // user profile route
-userRouter.get("/me", getUserProfileController);
-
+userRouter.get("/me", verifyAccessToken, getUserProfileController);
 export default userRouter;

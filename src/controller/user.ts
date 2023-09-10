@@ -113,13 +113,10 @@ export const userLoginController = async (req: Request, res: Response) => {
 };
 
 // user profile controller
-export const getUserProfileController = async (
-  _req: Request,
-  res: Response
-) => {
+export const getUserProfileController = async (req: Request, res: Response) => {
   // get user profile
   try {
-    const userID = "60f0bdfb9b0b3a2a1c7b0b3a";
+    const userID = req.user?.id;
 
     // get user from database
     const user: IUser | null = await User.findById(userID);
