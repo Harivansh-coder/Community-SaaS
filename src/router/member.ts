@@ -1,7 +1,7 @@
 // member router implementation
 
 import {
-  createMemberController,
+  addMemberController,
   removeMemberController,
 } from "@/controller/member";
 import validateRequestBody from "@/middleware/validate";
@@ -11,12 +11,8 @@ import express from "express";
 // express router instance
 const memberRouter = express.Router();
 
-// create member route
-memberRouter.post(
-  "/",
-  validateRequestBody(memberSchema),
-  createMemberController
-);
+// add member route
+memberRouter.post("/", validateRequestBody(memberSchema), addMemberController);
 
 // remove member route
 memberRouter.delete("/:id", removeMemberController);

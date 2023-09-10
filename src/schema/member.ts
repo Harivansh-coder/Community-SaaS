@@ -4,7 +4,9 @@ import { z } from "zod";
 
 // zod schema for member entity
 export const memberSchema = z.object({
-  community: z.string().uuid({ message: "Invalid community id" }),
-  user: z.string().uuid({ message: "Invalid user id" }),
-  role: z.string().uuid({ message: "Invalid role id" }),
+  community: z
+    .string()
+    .regex(/^[0-9a-fA-F]{24}$/, { message: "Invalid community id" }),
+  user: z.string().regex(/^[0-9a-fA-F]{24}$/, { message: "Invalid user id" }),
+  role: z.string().regex(/^[0-9a-fA-F]{24}$/, { message: "Invalid role id" }),
 });

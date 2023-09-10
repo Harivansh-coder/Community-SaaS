@@ -45,7 +45,7 @@ export const createRoleController = async (req: Request, res: Response) => {
 export const getAllRolesController = async (_req: Request, res: Response) => {
   try {
     // get all roles from database
-    const roles = await Role.find({}).lean().exec();
+    const roles = await Role.find({}).lean();
 
     // send success response
     return res.status(200).send({
