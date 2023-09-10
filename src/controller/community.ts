@@ -3,6 +3,7 @@
 import Community from "@/model/community";
 import Member from "@/model/member";
 import Role from "@/model/role";
+import { paginationQuery } from "@/utility/pagination";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
@@ -66,19 +67,38 @@ export const createCommunityController = async (
 
 // get all communities controller
 export const getAllCommunitiesController = async (
-  _req: Request,
+  req: Request,
   res: Response
 ) => {
   try {
+    // parse pagination query
+    const parsedPaginationQuery = paginationQuery.parse(req.query);
+
+    // get page and limit from parsed query
+    const { page, limit } = parsedPaginationQuery;
+
+    // get total number of documents to skip
+    const skip = (page - 1) * limit;
+
     // get all communities from database and populate owner name
     const communities = await Community.find({})
       .populate("owner", "name")
+      .skip(skip)
+      .limit(limit)
       .lean();
+
+    // get total number of communities
+    const totalCommunities = await Community.countDocuments({});
 
     // send success response
     return res.status(200).send({
       status: true,
       content: {
+        meta: {
+          total: totalCommunities,
+          pages: Math.ceil(totalCommunities / limit),
+          page,
+        },
         data: communities,
       },
     });
@@ -95,6 +115,17 @@ export const getAllCommunitiesController = async (
 // get all members of a community controller
 export const getAllMembersController = async (_req: Request, res: Response) => {
   try {
+    // parse pagination query
+    const parsedPaginationQuery = paginationQuery.parse(_req.query);
+
+    // get page and limit from parsed query
+    const { page, limit } = parsedPaginationQuery;
+
+    // get total number of documents to skip
+    const skip = (page - 1) * limit;
+
+    // get community slug from request params
+
     const communitySlug = _req.params.id;
 
     // get community id from database
@@ -116,12 +147,24 @@ export const getAllMembersController = async (_req: Request, res: Response) => {
     })
       .populate("user", "name")
       .populate("role", "name")
+      .skip(skip)
+      .limit(limit)
       .lean();
+
+    // get total number of members of a community
+    const totalMembersOfCurrentCommunity = await Member.countDocuments({
+      community: communityId,
+    });
 
     // send success response
     return res.status(200).send({
       status: true,
       content: {
+        meta: {
+          total: totalMembersOfCurrentCommunity,
+          pages: Math.ceil(totalMembersOfCurrentCommunity / limit),
+          page,
+        },
         data: allMembersOfCurrentCommunity,
       },
     });
@@ -142,6 +185,16 @@ export const getMyOwnedCommunitiesController = async (
 ) => {
   // get all my owned communities from database
   try {
+    // parse pagination query
+    const parsedPaginationQuery = paginationQuery.parse(req.query);
+
+    // get page and limit from parsed query
+    const { page, limit } = parsedPaginationQuery;
+
+    // get total number of documents to skip
+    const skip = (page - 1) * limit;
+
+    // get user id from request object
     const userId = req.user?.id;
 
     // check if user id is valid
@@ -155,12 +208,25 @@ export const getMyOwnedCommunitiesController = async (
     }
 
     // get all my owned communities from database
-    const myOwnedCommunities = await Community.find({ owner: userId }).lean();
+    const myOwnedCommunities = await Community.find({ owner: userId })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    // get total number of my owned communities
+    const totalMyOwnedCommunities = await Community.countDocuments({
+      owner: userId,
+    });
 
     // send success response
     return res.status(200).send({
       status: true,
       content: {
+        meta: {
+          total: totalMyOwnedCommunities,
+          pages: Math.ceil(totalMyOwnedCommunities / limit),
+          page,
+        },
         data: myOwnedCommunities,
       },
     });
@@ -181,6 +247,16 @@ export const getMyJoinedCommunitiesController = async (
 ) => {
   // get all my joined communities from database
   try {
+    // parse pagination query
+    const parsedPaginationQuery = paginationQuery.parse(req.query);
+
+    // get page and limit from parsed query
+    const { page, limit } = parsedPaginationQuery;
+
+    // get total number of documents to skip
+    const skip = (page - 1) * limit;
+
+    // get user id from request object
     const userId = req.user?.id;
 
     // check if user id is valid
@@ -203,12 +279,24 @@ export const getMyJoinedCommunitiesController = async (
       _id: { $in: myJoinedCommunitiesIds },
     })
       .populate("owner", "name")
+      .skip(skip)
+      .limit(limit)
       .lean();
+
+    // get total number of my joined communities
+    const totalMyJoinedCommunities = await Community.countDocuments({
+      _id: { $in: myJoinedCommunitiesIds },
+    });
 
     // send success response
     return res.status(200).send({
       status: true,
       content: {
+        meta: {
+          total: totalMyJoinedCommunities,
+          pages: Math.ceil(totalMyJoinedCommunities / limit),
+          page,
+        },
         data: myJoinedCommunities,
       },
     });

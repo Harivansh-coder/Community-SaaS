@@ -9,7 +9,7 @@ export const userBaseSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(8, { message: "Password must be at least 8 characters" })
+    .min(6, { message: "Password must be at least 6 characters" })
     .max(50, { message: "Password exceeds the maximum limit of characters" }),
 });
 
