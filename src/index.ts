@@ -3,6 +3,9 @@ import express from "express";
 import mongoose from "mongoose";
 import { envVariables } from "@/env";
 import userRouter from "@/router/user";
+import roleRouter from "./router/role";
+import communityRouter from "./router/community";
+import memberRouter from "./router/member";
 
 // create a new express application instance
 const app = express();
@@ -23,10 +26,10 @@ app.use("/v1/auth", userRouter);
 app.use("/v1/roles", roleRouter);
 
 // define a route handler for community routes
-// app.use("/v1/communities", communityRouter);
+app.use("/v1/communities", communityRouter);
 
-// // define a route handler for member routes
-// app.use("/v1/members", memberRouter);
+// define a route handler for member routes
+app.use("/v1/members", memberRouter);
 
 // connect to MongoDB and start the express server
 mongoose
