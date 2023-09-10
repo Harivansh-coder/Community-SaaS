@@ -1,25 +1,16 @@
 {
-  "name": "backend",
   "version": 2,
-  "public": false,
   "builds": [
     {
-      "src": "src/index.ts",
-      "use": "@vercel/node"
+      "src": "dist/index.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
     }
   ],
   "routes": [
     {
-      "src": "/robots.txt",
-      "status": 204
-    },
-    {
-      "src": "/favicon.ico",
-      "status": 204
-    },
-    {
       "src": "/(.*)",
-      "dest": "/src/index.ts"
+      "dest": "dist/index.js"
     }
   ]
 }
