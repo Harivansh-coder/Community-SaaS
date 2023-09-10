@@ -46,7 +46,7 @@ export const userSignupController = async (req: Request, res: Response) => {
       return res.status(400).send({
         status: false,
         content: {
-          error: "User already exists",
+          error: "User with this email already exists",
         },
       });
     } else {

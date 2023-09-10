@@ -18,6 +18,6 @@ export const userSignupSchema = userBaseSchema.extend({
   name: z
     .string()
     .trim()
-    .min(3, { message: "Name too short" })
+    .min(2, { message: "Name must be at least 2 characters long" })
     .max(50, { message: "Name too long" }),
 });

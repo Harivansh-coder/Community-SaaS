@@ -7,6 +7,7 @@ import {
   getMyJoinedCommunitiesController,
   getMyOwnedCommunitiesController,
 } from "@/controller/community";
+import verifyAccessToken from "@/middleware/auth";
 import validateRequestBody from "@/middleware/validate";
 import { communitySchema } from "@/schema/community";
 import express from "express";
@@ -17,6 +18,7 @@ const communityRouter = express.Router();
 // create community route
 communityRouter.post(
   "/",
+  verifyAccessToken,
   validateRequestBody(communitySchema),
   createCommunityController
 );

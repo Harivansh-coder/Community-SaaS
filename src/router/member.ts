@@ -4,6 +4,8 @@ import {
   addMemberController,
   removeMemberController,
 } from "@/controller/member";
+import verifyAccessToken from "@/middleware/auth";
+import userAccessCheck from "@/middleware/userAccess";
 import validateRequestBody from "@/middleware/validate";
 import { memberSchema } from "@/schema/member";
 import express from "express";
@@ -12,9 +14,15 @@ import express from "express";
 const memberRouter = express.Router();
 
 // add member route
-memberRouter.post("/", validateRequestBody(memberSchema), addMemberController);
+memberRouter.post(
+  "/",
+  verifyAccessToken,
+  userAccessCheck,
+  validateRequestBody(memberSchema),
+  addMemberController
+);
 
 // remove member route
-memberRouter.delete("/:id", removeMemberController);
+memberRouter.delete("/:id", verifyAccessToken, removeMemberController);
 
 export default memberRouter;

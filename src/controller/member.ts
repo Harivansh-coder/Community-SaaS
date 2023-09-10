@@ -13,6 +13,22 @@ export const addMemberController = async (req: Request, res: Response) => {
     // create member instance from member model
     const member = new Member({ community, user, role });
 
+    // check if member already exists
+    const existingMember = await Member.findOne({
+      community,
+      user,
+      role,
+    });
+
+    if (existingMember) {
+      return res.status(400).send({
+        status: false,
+        content: {
+          error: "Member already exists",
+        },
+      });
+    }
+
     // save member in database
     const savedMember = await member.save();
 
