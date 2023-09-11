@@ -24,7 +24,7 @@ memberRouter.post(
 
 // remove member route
 memberRouter.delete(
-  "/:id",
+  "/:memberId",
   verifyAccessToken,
   userAccessCheck,
   removeMemberController
