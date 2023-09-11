@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --no-notify --exit-child src/index.ts",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/index. js"
   },
   "author": "Harivansh",
@@ -30,6 +30,7 @@
     "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.48.0",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.7",
     "typescript": "^5.2.2"
   }
 }

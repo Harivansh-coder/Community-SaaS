@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeMemberController = exports.addMemberController = void 0;
-const member_1 = __importDefault(require("@/model/member"));
+const member_1 = __importDefault(require("../model/member"));
 const mongoose_1 = __importDefault(require("mongoose"));
 // create member controller
 const addMemberController = async (req, res) => {

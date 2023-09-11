@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const community_1 = require("@/controller/community");
-const auth_1 = __importDefault(require("@/middleware/auth"));
-const validate_1 = __importDefault(require("@/middleware/validate"));
-const community_2 = require("@/schema/community");
+const community_1 = require("../controller/community");
+const auth_1 = __importDefault(require("../middleware/auth"));
+const validate_1 = __importDefault(require("../middleware/validate"));
+const community_2 = require("../schema/community");
 const express_1 = __importDefault(require("express"));
 // express router instance
 const communityRouter = express_1.default.Router();

@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserProfileController = exports.userLoginController = exports.userSignupController = void 0;
 // controller for user routes
-const user_1 = __importDefault(require("@/model/user"));
-const token_1 = __importDefault(require("@/utility/token"));
+const user_1 = __importDefault(require("../model/user"));
+const token_1 = __importDefault(require("../utility/token"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 // user signup controller
 const userSignupController = async (req, res) => {

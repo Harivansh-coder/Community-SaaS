@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllRolesController = exports.createRoleController = void 0;
-const role_1 = __importDefault(require("@/model/role"));
-const pagination_1 = require("@/utility/pagination");
+const role_1 = __importDefault(require("../model/role"));
+const pagination_1 = require("../utility/pagination");
 // create role controller
 const createRoleController = async (req, res) => {
     try {
