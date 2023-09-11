@@ -15,5 +15,5 @@ const memberRouter = express_1.default.Router();
 // add member route
 memberRouter.post("/", auth_1.default, userAccess_1.default, (0, validate_1.default)(member_2.memberSchema), member_1.addMemberController);
 // remove member route
-memberRouter.delete("/:id", auth_1.default, member_1.removeMemberController);
+memberRouter.delete("/:memberId", auth_1.default, userAccess_1.default, member_1.removeMemberController);
 exports.default = memberRouter;

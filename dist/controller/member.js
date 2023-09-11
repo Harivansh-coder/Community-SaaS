@@ -61,9 +61,9 @@ exports.addMemberController = addMemberController;
 // remove member controller
 const removeMemberController = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { memberId } = req.params;
         // check if id is valid
-        if (!id || !mongoose_1.default.isValidObjectId(id)) {
+        if (!memberId || !mongoose_1.default.isValidObjectId(memberId)) {
             return res.status(400).send({
                 status: false,
                 content: {
@@ -72,16 +72,7 @@ const removeMemberController = async (req, res) => {
             });
         }
         // remove member from database
-        const removedMember = await member_1.default.findByIdAndRemove(id);
-        // check if member exists
-        if (!removedMember) {
-            return res.status(404).send({
-                status: false,
-                content: {
-                    error: "Member not found",
-                },
-            });
-        }
+        await member_1.default.findByIdAndRemove(memberId);
         // send success response
         return res.status(200).send({
             status: true,

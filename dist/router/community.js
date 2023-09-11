@@ -18,7 +18,7 @@ communityRouter.get("/", community_1.getAllCommunitiesController);
 // get all members of a community route
 communityRouter.get("/:id/members", community_1.getAllMembersController);
 // get all my owned communities route
-communityRouter.get("/me/owner", community_1.getMyOwnedCommunitiesController);
+communityRouter.get("/me/owner", auth_1.default, community_1.getMyOwnedCommunitiesController);
 // get all my joined communities route
-communityRouter.get("/me/member", community_1.getMyJoinedCommunitiesController);
+communityRouter.get("/me/member", auth_1.default, community_1.getMyJoinedCommunitiesController);
 exports.default = communityRouter;

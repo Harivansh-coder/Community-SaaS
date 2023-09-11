@@ -11,7 +11,7 @@
   "author": "Harivansh",
   "license": "ISC",
   "_moduleAliases": {
-    "@": "src"
+    "@": "dist"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
