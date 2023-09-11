@@ -45,15 +45,15 @@ export const userSignupController = async (req: Request, res: Response) => {
     if (error.code === 11000) {
       return res.status(400).send({
         status: false,
-        content: {
+        errors: {
           error: "User with this email already exists",
         },
       });
     } else {
       return res.status(500).send({
         status: false,
-        content: {
-          error: error.message,
+        errors: {
+          error: error.errors,
         },
       });
     }
@@ -72,7 +72,7 @@ export const userLoginController = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).send({
         status: false,
-        content: {
+        errors: {
           message: "Invalid credentials",
         },
       });
@@ -85,7 +85,7 @@ export const userLoginController = async (req: Request, res: Response) => {
     if (!isPasswordValid) {
       return res.status(400).send({
         status: false,
-        content: {
+        errors: {
           message: "Invalid credentials",
         },
       });
@@ -105,7 +105,7 @@ export const userLoginController = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).send({
       status: false,
-      content: {
+      errors: {
         error: error.message,
       },
     });
@@ -124,7 +124,7 @@ export const getUserProfileController = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).send({
         status: false,
-        content: {
+        errors: {
           message: "User not found",
         },
       });
@@ -145,7 +145,7 @@ export const getUserProfileController = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).send({
       status: false,
-      content: {
+      errors: {
         error: error.message,
       },
     });

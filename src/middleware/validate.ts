@@ -14,7 +14,7 @@ const validateRequestBody =
     } catch (error: any) {
       res.status(400).json({
         status: false,
-        content: {
+        errors: {
           error: error.errors,
         },
       });

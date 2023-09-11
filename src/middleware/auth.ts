@@ -20,7 +20,7 @@ const verifyAccessToken = async (
   if (!accessToken) {
     return res.status(401).send({
       status: false,
-      content: {
+      errors: {
         message: "Unauthorized",
       },
     });
@@ -42,7 +42,7 @@ const verifyAccessToken = async (
   } catch (error: any) {
     return res.status(401).send({
       status: false,
-      content: {
+      errors: {
         message: "Unauthorized",
       },
     });
