@@ -98,8 +98,8 @@ export const userLoginController = async (req: Request, res: Response) => {
     return res.status(200).send({
       status: true,
       content: {
-        "access-token": token,
-        "token-type": "Bearer",
+        access_token: token,
+        token_type: "Bearer",
       },
     });
   } catch (error: any) {
