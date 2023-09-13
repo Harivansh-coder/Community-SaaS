@@ -45,7 +45,7 @@ const userSignupController = async (req, res) => {
         if (error.code === 11000) {
             return res.status(400).send({
                 status: false,
-                content: {
+                errors: {
                     error: "User with this email already exists",
                 },
             });
@@ -53,8 +53,8 @@ const userSignupController = async (req, res) => {
         else {
             return res.status(500).send({
                 status: false,
-                content: {
-                    error: error.message,
+                errors: {
+                    error: error.errors,
                 },
             });
         }
@@ -71,7 +71,7 @@ const userLoginController = async (req, res) => {
         if (!user) {
             return res.status(400).send({
                 status: false,
-                content: {
+                errors: {
                     message: "Invalid credentials",
                 },
             });
@@ -82,7 +82,7 @@ const userLoginController = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).send({
                 status: false,
-                content: {
+                errors: {
                     message: "Invalid credentials",
                 },
             });
@@ -93,15 +93,15 @@ const userLoginController = async (req, res) => {
         return res.status(200).send({
             status: true,
             content: {
-                "access-token": token,
-                "token-type": "Bearer",
+                access_token: token,
+                token_type: "Bearer",
             },
         });
     }
     catch (error) {
         return res.status(500).send({
             status: false,
-            content: {
+            errors: {
                 error: error.message,
             },
         });
@@ -119,7 +119,7 @@ const getUserProfileController = async (req, res) => {
         if (!user) {
             return res.status(404).send({
                 status: false,
-                content: {
+                errors: {
                     message: "User not found",
                 },
             });
@@ -140,7 +140,7 @@ const getUserProfileController = async (req, res) => {
     catch (error) {
         return res.status(500).send({
             status: false,
-            content: {
+            errors: {
                 error: error.message,
             },
         });

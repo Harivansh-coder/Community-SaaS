@@ -10,7 +10,7 @@ const validateRequestBody = (schema) => async (req, res, next) => {
     catch (error) {
         res.status(400).json({
             status: false,
-            content: {
+            errors: {
                 error: error.errors,
             },
         });
