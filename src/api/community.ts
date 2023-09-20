@@ -6,7 +6,7 @@ import {
   getAllMembersController,
   getMyJoinedCommunitiesController,
   getMyOwnedCommunitiesController,
-} from "@/controller/community";
+} from "@/controllers/community";
 import verifyAccessToken from "@/middleware/auth";
 import validateRequestBody from "@/middleware/validate";
 import { communitySchema } from "@/schema/community";

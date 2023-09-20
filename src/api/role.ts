@@ -1,6 +1,9 @@
 // role router implementation
 
-import { createRoleController, getAllRolesController } from "@/controller/role";
+import {
+  createRoleController,
+  getAllRolesController,
+} from "@/controllers/role";
 import validateRequestBody from "@/middleware/validate";
 import { roleSchema } from "@/schema/role";
 import express from "express";

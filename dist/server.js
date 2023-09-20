@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // server.ts is the entry point for the application and responsible for starting the express server
 const express_1 = __importDefault(require("express"));
-const framework_1 = __importDefault(require("./libraries/framework"));
-const user_1 = __importDefault(require("./router/user"));
-const role_1 = __importDefault(require("./router/role"));
-const community_1 = __importDefault(require("./router/community"));
-const member_1 = __importDefault(require("./router/member"));
-const database_1 = __importDefault(require("./libraries/database"));
-const logger_1 = __importDefault(require("./libraries/logger"));
+const framework_1 = __importDefault(require("./loaders/framework"));
+const user_1 = __importDefault(require("./api/user"));
+const role_1 = __importDefault(require("./api/role"));
+const community_1 = __importDefault(require("./api/community"));
+const member_1 = __importDefault(require("./api/member"));
+const database_1 = __importDefault(require("./loaders/database"));
+const logger_1 = __importDefault(require("./universe/v1/libraries/logger"));
 // creating a new server that will return an express application instance
 const server = async () => {
     // new express application instance

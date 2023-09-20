@@ -3,7 +3,7 @@
 import {
   addMemberController,
   removeMemberController,
-} from "@/controller/member";
+} from "@/controllers/member";
 import verifyAccessToken from "@/middleware/auth";
 import userAccessCheck from "@/middleware/userAccess";
 import validateRequestBody from "@/middleware/validate";

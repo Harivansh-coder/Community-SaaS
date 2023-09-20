@@ -1,7 +1,7 @@
 // role controller implementation
 
 import Role from "@/model/role";
-import { LIMIT, paginationQuery } from "@/utility/pagination";
+import { LIMIT, paginationQuery } from "@/universe/v1/libraries/pagination";
 import { Request, Response } from "express";
 
 // create role controller

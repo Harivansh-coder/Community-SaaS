@@ -5,7 +5,7 @@ import {
   userSignupController,
   userLoginController,
   getUserProfileController,
-} from "@/controller/user";
+} from "@/controllers/user";
 import { userSignupSchema, userBaseSchema } from "@/schema/user";
 import validateRequestBody from "@/middleware/validate";
 import verifyAccessToken from "@/middleware/auth";

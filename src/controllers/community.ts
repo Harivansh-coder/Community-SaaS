@@ -3,7 +3,7 @@
 import Community from "@/model/community";
 import Member from "@/model/member";
 import Role from "@/model/role";
-import { paginationQuery } from "@/utility/pagination";
+import { paginationQuery } from "@/universe/v1/libraries/pagination";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 

@@ -1,7 +1,7 @@
 import "module-alias/register";
 import server from "@/server";
 import { envVariables } from "@/env";
-import CustomLogger from "@/libraries/logger";
+import CustomLogger from "@/universe/v1/libraries/logger";
 
 // start the server
 (async () => {

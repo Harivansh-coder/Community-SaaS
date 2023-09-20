@@ -1,8 +1,8 @@
 // controller for user routes
 import User from "@/model/user";
-import generateToken from "@/utility/token";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import generateToken from "@/universe/v1/libraries/token";
 
 // user signup controller
 export const userSignupController = async (req: Request, res: Response) => {

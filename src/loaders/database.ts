@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { envVariables } from "@/env";
-import CustomLogger from "@/libraries/logger";
+import CustomLogger from "@/universe/v1/libraries/logger";
 // connect to MongoDB Loader
 const ConnectToMongoDBLoader = async (): Promise<void> => {
   try {
