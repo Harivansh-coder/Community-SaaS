@@ -5,7 +5,8 @@ import userRouter from "@/router/user";
 import roleRouter from "@/router/role";
 import communityRouter from "@/router/community";
 import memberRouter from "@/router/member";
-import ConnectToMongoDBLoader from "./libraries/database";
+import ConnectToMongoDBLoader from "@/libraries/database";
+import CustomLogger from "@/libraries/logger";
 
 // creating a new server that will return an express application instance
 const server = async (): Promise<express.Application> => {
@@ -14,7 +15,7 @@ const server = async (): Promise<express.Application> => {
 
   // Loaders
   // load logger class
-  // Logger.Loader();
+  CustomLogger.Loader();
 
   // load all the basic middleware for the express application
   FrameworkLoader(app);

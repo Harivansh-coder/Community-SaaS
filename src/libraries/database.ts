@@ -2,15 +2,14 @@
 
 import mongoose from "mongoose";
 import { envVariables } from "@/env";
-import logger from "@/libraries/logger";
-
+import CustomLogger from "@/libraries/logger";
 // connect to MongoDB Loader
 const ConnectToMongoDBLoader = async (): Promise<void> => {
   try {
     await mongoose.connect(envVariables.MONGO_URL || "", {});
-    logger.info("Connected to MongoDB");
+    CustomLogger.instance.info("Connected to MongoDB");
   } catch (error) {
-    logger.error("Error connecting to MongoDB: ", error);
+    CustomLogger.instance.error("Error connecting to MongoDB: ", error);
   }
 };
 

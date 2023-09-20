@@ -1,6 +1,7 @@
 import "module-alias/register";
 import server from "@/server";
 import { envVariables } from "@/env";
+import CustomLogger from "@/libraries/logger";
 
 // start the server
 (async () => {
@@ -9,6 +10,6 @@ import { envVariables } from "@/env";
 
   // start the express server
   app.listen(envVariables.PORT, () =>
-    console.log(`Server started at http://localhost:${envVariables.PORT}`)
+    CustomLogger.instance.info(`Server started on port ${envVariables.PORT}`)
   );
 })();
