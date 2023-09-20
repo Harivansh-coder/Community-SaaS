@@ -9,6 +9,9 @@ package-lock.json
 
 .env
 
+# ignore all config files
+config
+
 # Coveralls
 .nyc_output
 coverage
