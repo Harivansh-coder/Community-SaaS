@@ -3,6 +3,7 @@
 import jwt from "jsonwebtoken";
 import { envVariables } from "@/env";
 
+// generate token with userID as payload
 const generateToken = (userID: string): string => {
   const token = jwt.sign(
     {

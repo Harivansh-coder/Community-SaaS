@@ -1,7 +1,8 @@
-// pagination query validation suing zod
+// pagination query validation using zod
 
 import { z } from "zod";
 
+// safe number function
 function safeNum(val: string, defaultNumber: number) {
   const num = Number(val);
   if (isNaN(num)) return defaultNumber;

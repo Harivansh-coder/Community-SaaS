@@ -1,41 +1,18 @@
 // controller for user routes
-import User from "@/model/user";
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import generateToken from "@/universe/v1/libraries/token";
+import UserService from "@/services/user";
 
 // user signup controller
 export const userSignupController = async (req: Request, res: Response) => {
   // signup logic
   try {
-    const { name, email, password } = req.body;
-
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // save user to database
-    const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
-    // save user to database
-    await user.save();
-
-    // generate token
-    const token = await generateToken(user._id);
+    const { user, token } = await UserService.userSignupService(req);
 
     // send response
     return res.status(201).send({
       status: true,
       content: {
-        data: {
-          name: user.name,
-          email: user.email,
-          id: user._id,
-          created_at: user.createdAt,
-        },
+        data: user,
         meta: {
           access_token: token,
         },
@@ -64,35 +41,8 @@ export const userSignupController = async (req: Request, res: Response) => {
 export const userLoginController = async (req: Request, res: Response) => {
   // signin logic
   try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email }).lean();
-
-    // check if user exists
-    if (!user) {
-      return res.status(400).send({
-        status: false,
-        errors: {
-          message: "Invalid credentials",
-        },
-      });
-    }
-
-    // compare password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    // check if password is valid
-    if (!isPasswordValid) {
-      return res.status(400).send({
-        status: false,
-        errors: {
-          message: "Invalid credentials",
-        },
-      });
-    }
-
-    // generate token
-    const token = await generateToken(user._id);
+    // using userLoginService from UserService class
+    const { token } = await UserService.userLoginService(req);
 
     // send response
     return res.status(200).send({
@@ -116,30 +66,14 @@ export const userLoginController = async (req: Request, res: Response) => {
 export const getUserProfileController = async (req: Request, res: Response) => {
   // get user profile
   try {
-    const userID = req.user?.id;
-
     // get user from database
-    const user = await User.findById(userID).lean();
-    // check if user exists
-    if (!user) {
-      return res.status(404).send({
-        status: false,
-        errors: {
-          message: "User not found",
-        },
-      });
-    }
+    const userProfile = await UserService.getUserProfileService(req);
 
     // send response
     return res.status(200).send({
       status: true,
       content: {
-        data: {
-          name: user.name,
-          email: user.email,
-          id: user._id,
-          created_at: user.createdAt,
-        },
+        data: userProfile,
       },
     });
   } catch (error: any) {

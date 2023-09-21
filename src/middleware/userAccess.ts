@@ -2,6 +2,7 @@
 
 import Member from "@/model/member";
 import Role from "@/model/role";
+import MemberService from "@/services/member";
 import { Request, Response, NextFunction } from "express";
 
 // user access middleware
@@ -40,20 +41,10 @@ const userAccessCheck = async (
     } else if (req.method === "DELETE") {
       // this is for the delete route
 
-      const { memberId } = req.params;
+      const { memberId }: any = req.params;
 
       // find the community of the member
-      const member = await Member.findById(memberId);
-
-      // check if member with the id exists
-      if (!member) {
-        return res.status(404).send({
-          status: false,
-          errors: {
-            error: "Member not found",
-          },
-        });
-      }
+      const member = await MemberService.checkIfMemberExistsService(memberId);
 
       // check if logged in user is allowed
       const isAllowed = await Member.exists({
