@@ -17,3 +17,7 @@ coverage
 benchmarks/graphs
 
 /api/**/*.js.map
+.vercel
+
+# dist build output
+/dist

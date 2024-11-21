@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
+    "module": "CommonJS",
     "target": "ES2022",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "outDir": "./dist",
     "allowJs": true,
     "checkJs": true,
@@ -11,21 +11,10 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "useUnknownInCatchVariables": true,
-    "noUncheckedIndexedAccess": true /* This depends on you */,
-    "allowSyntheticDefaultImports": true,
-    "useDefineForClassFields": true,
-    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "typeRoots": ["./src/@types"]
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*.ts"]
 }
+

@@ -31,15 +31,23 @@ app.use("/v1/community", communityRouter);
 // define a route handler for member routes
 app.use("/v1/member", memberRouter);
 
-// connect to MongoDB and start the express server
+// connect to MongoDB
 mongoose
   .connect(envVariables.MONGO_URL || "", {})
   .then(() => {
     console.log("MongoDB connected");
-    app.listen(envVariables.PORT, () => {
-      console.log(`Server started at http://localhost:${envVariables.PORT}`);
-    });
   })
   .catch((err) => {
-    console.log(err);
+    console.error(err);
   });
+
+// Export the app for Vercel
+export default app;
+
+// Start server locally when not in a serverless environment
+if (process.env.NODE_ENV !== "production") {
+  const port = envVariables.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`);
+  });
+}
